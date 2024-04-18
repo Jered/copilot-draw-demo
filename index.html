@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+      .pixel {
+        width: 4px;
+        height: 4px;
+        display: inline-block;
+      }
+      .row {
+        margin: 0;
+        padding: 0;
+        height: 4px;
+      }
+      .row::after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+    </style>
+</head>
+<body>
+    <div id="canvas"></div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        for (let i = 0; i < 64; i++) {
+          const row = document.createElement('div');
+          row.className = 'row';
+          for (let j = 0; j < 64; j++) {
+            const pixel = document.createElement('div');
+            pixel.className = 'pixel';
+            row.appendChild(pixel);
+          }
+          canvas.appendChild(row);
+        }
+
+        // LANDSCAPE
+        // const pixels = document.getElementsByClassName('pixel');
+        // const topColor = [128, 0, 128]; // RGB for deep purple
+        // const bottomColor = [139, 69, 19]; // RGB for dark sand brown
+        // const transitionRow = Math.floor(64 * 2 / 3); // 2/3rds of the way down
+        // const cactusPosition = { x: 32, y: 50 }; // position of the cactus
+        // const cactusSize = { width: 1, height: 10 }; // size of the cactus
+        // const arm1Position = { x: 29, y: 53 }; // position of the first arm
+        // const arm1Size = { width: 1, height: 3 }; // size of the first arm
+        // const arm2Position = { x: 35, y: 55 }; // position of the second arm
+        // const arm2Size = { width: 1, height: 3 }; // size of the second arm
+
+        // for (let y = 0; y < 64; y++) {
+        //   for (let x = 0; x < 64; x++) {
+        //     const pixel = pixels[y * 64 + x];
+        //     let color;
+        //     if (y < transitionRow) {
+        //       // Calculate the color for the top part of the image
+        //       const factor = y / transitionRow;
+        //       color = topColor.map(value => Math.floor(value * (1 - factor)));
+        //     } else {
+        //       // Calculate the color for the bottom part of the image
+        //       const factor = (y - transitionRow) / (64 - transitionRow);
+        //       color = bottomColor.map(value => Math.floor(value * (1 + factor)));
+        //     }
+        //     // Draw the cactus
+        //     if ((x >= cactusPosition.x && x < cactusPosition.x + cactusSize.width &&
+        //       y >= cactusPosition.y && y < cactusPosition.y + cactusSize.height) ||
+        //       (x >= arm1Position.x && x < arm1Position.x + arm1Size.width &&
+        //       y >= arm1Position.y && y < arm1Position.y + arm1Size.height) ||
+        //       (x >= arm2Position.x && x < arm2Position.x + arm2Size.width &&
+        //       y >= arm2Position.y && y < arm2Position.y + arm2Size.height)) {
+        //       color = [0, 0, 0]; // black
+        //     }
+        //     pixel.style.backgroundColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+        //   }
+        // }
+
+        // RAINBOW
+        // const pixels = document.getElementsByClassName('pixel');
+        // const radii = [40 * 0.8, 30 * 0.8, 20 * 0.8, 10 * 0.8]; // radii for the red, yellow, green and blue arcs
+        // const colors = ['red', 'yellow', 'green', 'blue']; // corresponding colors
+        // const centerX = 32;
+        // const centerY = 64; // position the center at the bottom of the canvas
+
+        // for (let y = 0; y < 64; y++) {
+        //   for (let x = 0; x < 64; x++) {
+        //     const dx = x - centerX;
+        //     const dy = y - centerY;
+        //     const distance = Math.sqrt(dx * dx + dy * dy);
+        //     const pixel = pixels[y * 64 + x];
+        //     pixel.style.backgroundColor = 'blue'; // default to blue
+        //     for (let i = 0; i < radii.length; i++) {
+        //       if (distance <= radii[i] && distance > (i === radii.length - 1 ? 0 : radii[i + 1])) {
+        //         pixel.style.backgroundColor = colors[i];
+        //         break;
+        //       }
+        //     }
+        //   }
+        // }
+
+          const pixels = document.getElementsByClassName('pixel');
+          const blackColor = [0, 0, 0]; // RGB for black
+          const redColor = [255, 0, 0]; // RGB for red
+          const whiteColor = [255, 255, 255]; // RGB for white
+          const yellowColor = [255, 255, 0]; // RGB for yellow
+          const pinkColor = [255, 105, 180]; // RGB for pink
+          const dotColor = [0, 0, 0]; // RGB for dot
+          const dynamitePosition = { x: 29, y: 29 }; // position of the dynamite
+          const dynamiteSize = { width: 6, height: 20 }; // size of the dynamite
+          const fusePosition = { x: 32, y: 24 }; // position of the fuse
+          const fuseSize = { width: 1, height: 6 }; // size of the fuse
+          const sparkPosition = { x: 32, y: 23 }; // position of the spark
+          const sparkSize = 4; // size of the spark
+          const dotSpacing = 6; // spacing of the dots
+          const dotSize = 2; // size of the dots
+
+          for (let y = 0; y < 64; y++) {
+            for (let x = 0; x < 64; x++) {
+              const pixel = pixels[y * 64 + x];
+              let color = pinkColor; // default to pink
+              // Draw the dynamite
+              if (x >= dynamitePosition.x && x < dynamitePosition.x + dynamiteSize.width &&
+                  y >= dynamitePosition.y && y < dynamitePosition.y + dynamiteSize.height) {
+                color = redColor;
+              }
+              // Draw the fuse
+              if (x >= fusePosition.x && x < fusePosition.x + fuseSize.width &&
+                  y >= fusePosition.y && y < fusePosition.y + fuseSize.height) {
+                color = whiteColor;
+              }
+              // Draw the spark
+              if (Math.abs(x - sparkPosition.x) <= sparkSize && Math.abs(y - sparkPosition.y) <= sparkSize &&
+                  Math.abs(x - sparkPosition.x) === Math.abs(y - sparkPosition.y)) {
+                color = yellowColor;
+              }
+              // Draw the polka dots
+              if (x % dotSpacing < dotSize && y % dotSpacing < dotSize &&
+                  !(x >= dynamitePosition.x && x < dynamitePosition.x + dynamiteSize.width &&
+                    y >= dynamitePosition.y && y < dynamitePosition.y + dynamiteSize.height)) {
+                color = dotColor;
+              }
+              pixel.style.backgroundColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+            }
+          }
+
+    </script>
+</body>
+</html>
