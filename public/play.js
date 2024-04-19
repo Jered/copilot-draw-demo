@@ -10,52 +10,32 @@ for (let i = 0; i < 64; i++) {
   }
   canvas.appendChild(row);
 }
-// END DO NOT CHANGE
+// END OF DO NOT CHANGE
 
 
-/** 
- * SELECT BETWEEN THIS COMMENT AND THE END COMMENT BEFORE USING
- * GITHUB COPILOT CHAT TO MODIFY YOUR DRAWING
-**/
+// SELECT THE CODE BELOW THIS LINE AND REPLACE IT WITH COPILOT SUGGESTIONS
+// Define the bug shape
 const pixels = document.getElementsByClassName('pixel');
-const bgColor = [75, 0, 130]; // RGB for dark purple
-const flameColor = [218, 112, 214]; // RGB for light purple
+const bgColor = 'darkblue'; // Very dark blue background
+const airplaneColor = 'lightblue'; // Light blue airplane
 
-// Define the points for the flame
-const flamePoints = [
-  { x: 32, y: 48 },
-  { x: 38, y: 40 },
-  { x: 42, y: 32 },
-  { x: 38, y: 24 },
-  { x: 32, y: 16 },
-  { x: 26, y: 24 },
-  { x: 22, y: 32 },
-  { x: 26, y: 40 },
-  { x: 30, y: 48 },
-  { x: 34, y: 48 },
-];
+// Set all pixels to the background color
+for (let i = 0; i < pixels.length; i++) {
+  pixels[i].style.backgroundColor = bgColor;
+}
 
-for (let y = 0; y < 64; y++) {
-  for (let x = 0; x < 64; x++) {
-    const pixel = pixels[y * 64 + x];
-    let color = bgColor; // default to background color
-
-    // Check if the point is within the flame
-    let inside = false;
-    for (let i = 0, j = flamePoints.length - 1; i < flamePoints.length; j = i++) {
-      if ((flamePoints[i].y > y) !== (flamePoints[j].y > y) &&
-        (x < (flamePoints[j].x - flamePoints[i].x) * (y - flamePoints[i].y) / (flamePoints[j].y - flamePoints[i].y) + flamePoints[i].x)) {
-        inside = !inside;
-      }
-    }
-
-    if (inside) {
-      color = flameColor;
-    }
-
-    pixel.style.backgroundColor = `rgb(${Math.round(color[0])}, ${Math.round(color[1])}, ${Math.round(color[2])})`;
+// Define the airplane shape as a right-facing triangle
+let airplanePixels = [];
+for (let i = 20; i <= 40; i++) {
+  for (let j = 20; j <= i; j++) {
+    airplanePixels.push({x: j, y: i});
   }
 }
-/**
- * END COMMENT
-**/
+
+// Set the airplane pixels to the airplane color
+for (let i = 0; i < airplanePixels.length; i++) {
+  const x = airplanePixels[i].x;
+  const y = airplanePixels[i].y;
+  const pixel = pixels[y * 64 + x];
+  pixel.style.backgroundColor = airplaneColor;
+}
