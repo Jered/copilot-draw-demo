@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    .pixel {
+      width: 4px;
+      height: 4px;
+      display: table-cell;
+    }
+
+    .row {
+      margin: 0;
+      padding: 0;
+      height: 4px;
+    }
+
+    .row::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    #canvas {
+      width: 256px;
+      height: 256px;
+      border: black 1px solid;
+      padding: 0;
+      margin-top: 8px;
+    }
+
+    #original {
+      width: 256px;
+      height: 256px;
+      border: black 1px solid;
+      background-size: cover;
+      margin-bottom: 8px;
+    }
+
+  </style>
+  <script>
+    function setupGame() {
+      const promptImage = new URLSearchParams(window.location.search).get('prompt');
+      const original = document.getElementById('original');
+      const debug = document.getElementById('debug');
+
+      if (promptImage === '1') {
+        original.style.backgroundImage = 'url(./images/prompt1.png)';
+      } else if (promptImage === '2') {
+        original.style.backgroundImage = 'url(images/prompt2.png)';
+      } else {
+        original.style.backgroundImage = 'url(images/prompt3.png)';
+      }
+    }
+
+    function reloadPage() {
+      window.location.reload();
+    }
+
+  </script>
+</head>
+
+<body onload="setupGame()">
+  <p> <em>Hint: Give GitHub Copilot context on what you are trying to do.</em> Image is 64x64 pixels.</p>
+  <div id="original"></div>
+  <button onclick="reloadPage()">Update</button>
+  <button onclick="window.location.href = 'index.html'">Start over</button>
+  <div id="canvas"></div>
+
+  <script type="text/javascript" src="play.js"></script>
+</body>
+
+</html>
