@@ -12,7 +12,7 @@
   "customizations": {
     "codespaces": {
       "openFiles": [
-        "public/play.html"
+        "public/play.js"
       ]
     }
   },
